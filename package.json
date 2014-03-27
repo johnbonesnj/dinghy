@@ -1,0 +1,19 @@
+{
+  "name": "dinghy",
+  "version": "0.0.1",
+  "description": "Wrapper for Digital Ocean API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/johnbonesnj/dinghy"
+  },
+  "author": "johnbonesnj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnbonesnj/dinghy/issues"
+  },
+  "homepage": "https://github.com/johnbonesnj/dinghy"
+}
