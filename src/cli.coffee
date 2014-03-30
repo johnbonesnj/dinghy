@@ -1,30 +1,38 @@
 #!/usr/local/bin/coffee
 
-secret = require './secret'
-dinghy = require './index'
+## Utility
 fs = require 'fs'
+_  = require 'lodash'
+
+## CLI
+prettyjson = require 'prettyjson'
 colors  = require 'colors'
 colors.mode = 'console'
 parser = require 'nomnom'
-package_json = require '../package.json'
 
-dinghy.setup secret.client_id, secret.api_key
+## Config
+package_json = require '../package.json'
+secret = require './secret'
+
+## Modules
+dinghy = require('./index')
+dinghy.setup(secret.client_id, secret.api_key)
 
 ## SSH Key functions
 listKeys = (callback) ->
-  dinghy.all_ssh_keys (e, o) ->
+  dinghy.showKeys (e, o) ->
     if o.status is 'OK'
       key_obj = o
       key_ary = o.ssh_keys
+      key_stat = o.status
       #key_str = JSON.stringify(key_ary)
-      console.log "SSH Keys: ".blue
-
-      for key in key_ary
-        do (key) ->
-          id = key.id
-          name = key.name
-          ok = "OK".green
-          console.log "{ status: '#{ok}', ssh_keys: [ { id: #{id}, name: '#{name}' } ] }"
+      console.log prettyjson.render key_obj, {noColor: false}
+      # for key in key_ary
+      #   do (key) ->
+      #     id = key.id
+      #     name = key.name
+      #     ok = "OK".green
+      #     console.log "{ status: '#{ok}', ssh_keys: [ { id: #{id}, name: '#{name}' } ] }"
     else
       console.log "ERROR".red
       console.log o.status

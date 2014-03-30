@@ -1,5 +1,6 @@
 request = require 'request'
-
+client = require './lib/client'
+_ = require 'lodash'
 
 dinghy = {}
 module.exports = dinghy
@@ -9,7 +10,6 @@ client_id = ""
 cred_str = ""
 host_str = "https://api.digitalocean.com"
 
-client = require './lib/client'
 ids_created_this_session = []
 ssh_ids_created_this_session = []
 
@@ -29,17 +29,17 @@ dinghy.documentation = (callback) ->
     callback e, o
 
 # SSH Keys
-dinghy.all_ssh_keys = (callback) ->
+dinghy.showKeys = (callback) ->
   #/ssh_keys/?cred_str
   req = "#{host_str}/ssh_keys/?#{cred_str}"
   client.send_request(req, callback)
 
-dinghy.show_ssh_key = (id, callback) ->
+dinghy.showKey = (id, callback) ->
   #/ssh_keys/[ssh_key_id]/?cred_str
   req = "#{host_str}/ssh_keys/#{id}/?#{cred_str}"
   client.send_request(req, callback)
 
-dinghy.create_ssh_key = (key, name, callback) ->
+dinghy.addKey = (key, name, callback) ->
   #/ssh_keys/new/?name=[ssh_key_name]&ssh_pub_key=[ssh_public_key]&cred_str
   req = "#{host_str}/ssh_keys/new/?name=#{name}&ssh_pub_key=#{key}&#{cred_str}"
   client.send_request req, (e, o) ->
@@ -55,13 +55,13 @@ dinghy.create_ssh_key = (key, name, callback) ->
         ssh_ids_created_this_session.push(t_id)
     callback e, o
 
-dinghy.destroy_ssh_key = (id, callback) ->
+dinghy.destroyKey = (id, callback) ->
   #/ssh_keys/[ssh_key_id]/destroy/?cred_str
   req = host_str + "/ssh_keys/#{id}/destroy/?" + cred_str
   client.send_request(req, callback)
 
 # Droplets
-dinghy.all_droplets = (callback) ->
+dinghy.showDroplets = (callback) ->
   req = "#{host_str}/droplets/?#{cred_str}"
   client.send_request req, callback
 
@@ -76,20 +76,32 @@ dinghy.get_ids = (callback) ->
         ids.push(machine.id)
       callback e, ids
 
-dinghy.show_droplet = (id, callback) ->
+dinghy.showDroplet = (id, callback) ->
   #/ssh_keys/[ssh_key_id]/?cred_str
   req = "#{host_str}/droplets/#{id}/?#{cred_str}"
   client.send_request(req, callback)
+# Images
+dinghy.showImages = (callback) ->
+  # /images/?
+  req = "#{host_str}/images/?#{cred_str}"
+  client.send_request(req, callback)
+dinghy.showImage = (image_id_or_slug, callback) ->
+  req = "#{host_str}/images/#{image_id_or_slug}/?#{cred_str}"
+  client.send_request(req, callback)
 
 # Events
-dinghy.events = (id, callback) ->
+dinghy.showEvents = (id, callback) ->
   # /events/[event_id]/?
   req = "#{host_str}/events/#{id}/?#{cred_str}"
   client.send_request(req, callback)
 
-
+# Regions
+dinghy.showRegions = (callback) ->
+  # /regions/?
+  req = "#{host_str}/regions/?#{cred_str}"
+  client.send_request(req, callback)
 
 # Droplet Available Sizes
-dinghy.sizes = (callback) ->
+dinghy.showSizes = (callback) ->
   req = host_str + "/sizes/?" + cred_str
   client.send_request(req, callback)

@@ -45,7 +45,7 @@ describe 'documentation', ->
       done()
 
   it 'should be able to list sizes', (done) ->
-    dinghy.sizes (e, o) ->
+    dinghy.showSizes (e, o) ->
       o.status.should.equal 'OK'
       #console.log o
       done()
@@ -53,29 +53,44 @@ describe 'documentation', ->
 describe 'create functions', ->
   describe 'ssh keys', ->
     it 'should create a key when given name and public key', (done) ->
-      dinghy.create_ssh_key test_pub_key, 'test_name', (e, o) ->
+      dinghy.addKey test_pub_key, 'test_name', (e, o) ->
         o.status.should.equal 'OK'
         #console.log o
         temp_ssh_ids.push(o.ssh_key.id)
         done()
 
-describe 'list functions', ->
+describe 'list', ->
   describe 'ssh keys', ->
     it 'should list all ssh keys', (done) ->
-      dinghy.all_ssh_keys (e, o) ->
+      dinghy.showKeys (e, o) ->
         o.status.should.equal 'OK'
         #console.log o
         done()
-
     it 'should list single ssh key when given id', (done) ->
-      dinghy.show_ssh_key temp_ssh_ids[0], (e, o) ->
+      dinghy.showKey temp_ssh_ids[0], (e, o) ->
         o.status.should.equal 'OK'
         #console.log o
         done()
   describe 'events', ->
     it 'should return No Event Found when given wrong id', (done) ->
-      dinghy.events '12234', (e, o) ->
+      dinghy.showEvents '12234', (e, o) ->
         o.should.equal 'No Event Found'
+        done()
+  describe 'regions', ->
+    it 'should list all available regions', (done) ->
+      dinghy.showRegions (e, o) ->
+        o.status.should.equal 'OK'
+        done()
+  describe 'images', ->
+    it 'should list all available images', (done) ->
+      dinghy.showImages (e, o) ->
+        o.status.should.equal 'OK'
+        #console.log o
+        done()
+    it 'should show a image when given id or slug', (done) ->
+      dinghy.showImage '2118237', (e, o) ->
+        o.status.should.equal 'OK'
+        #console.log o
         done()
   describe 'droplets', ->
     it 'should return array of droplet ids', (done) ->
@@ -84,13 +99,13 @@ describe 'list functions', ->
         o.should.be.Array?
         done()
     it 'should return droplets object', (done) ->
-      dinghy.all_droplets (e, o) ->
+      dinghy.showDroplets (e, o) ->
         o.status.should.equal 'OK'
         #console.log o
         done()
     it 'should return droplet when given id', (done) ->
       id = '1364556'
-      dinghy.show_droplet id, (e, o) ->
+      dinghy.showDroplet id, (e, o) ->
         #console.log o
         o.status.should.equal 'OK'
         done()
@@ -98,7 +113,7 @@ describe 'list functions', ->
 describe 'destroy functions', ->
   describe 'ssh keys', ->
     it 'should destroy a ssh key when given id', (done) ->
-      dinghy.destroy_ssh_key temp_ssh_ids[0], (e, o) ->
+      dinghy.destroyKey temp_ssh_ids[0], (e, o) ->
       # dinghy.destroy_ssh_key '102716', (e, o) ->
         o.status.should.equal 'OK'
         #console.log "destroy_ssh_key Results: #{o.status}"

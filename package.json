@@ -18,12 +18,13 @@
   },
   "homepage": "https://github.com/johnbonesnj/dinghy",
   "dependencies": {
-    "unirest": "~0.1.9",
-    "colors": "~0.6.2",
-    "async": "~0.2.5",
-    "request": "^2.34.0",
-    "nomnom": "1.6.2",
-    "underscore": "^1.6.0"
+    "unirest": "*",
+    "colors": "*",
+    "async": "*",
+    "request": "*",
+    "nomnom": "*",
+    "lodash": "*",
+    "prettyjson": "^1.0.0"
   },
   "devDependencies": {
     "coffee-script": "*",
@@ -35,7 +36,7 @@
     "gulp-mocha": "*",
     "gulp-coffee": "*",
     "mocha": "*",
-    "chai": "^1.9.1",
-    "gulp-clean": "^0.2.4"
+    "chai": "*",
+    "gulp-clean": "*"
   }
 }

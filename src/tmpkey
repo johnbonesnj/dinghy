@@ -1,14 +1,13 @@
 #!/usr/local/bin/coffee
-_ = require 'underscore'
+_ = require 'lodash'
 secret = require './secret'
 dinghy = require './index'
 fs = require 'fs'
 colors  = require 'colors'
 colors.mode = 'console'
-Chance = require 'chance'
+# Chance = require 'chance'
 parser = require "nomnom"
-chance = new Chance()
-
+# chance = new Chance()
 
 dinghy.setup secret.client_id, secret.api_key
 
@@ -17,6 +16,7 @@ temp_ssh_ids = []
 
 print = (ary) ->
   console.log ary
+
 destroy = (ary) ->
   for key in ary
     do (key) ->
@@ -64,20 +64,20 @@ list = (callback) ->
 
 create = (count) ->
   _(count).times ->
-      rand_int = chance.integer {min: 1000, max: 9999}
-      key_name = "Test_Key-#{rand_int}"
-      dinghy.create_ssh_key test_pub_key, key_name, (e, o) ->
-        temp_ssh_ids.push(o.ssh_key.id)
-        if o.status is 'OK'
-          key = o.ssh_key
-          id = key.id
-          name = key.name
-          key_str = key.ssh_pub_key
-          ok = "OK".green
-          console.log "{ status: '#{ok}', ssh_key: { id: #{id}, name: '#{name}', ssh_pub_key: '#{key_str}' } }"
-        else
-          console.log "ERROR".red
-          console.log o.status
+    rand_int = _.random(1000, 1999)
+    key_name = "Test_Key-#{rand_int}"
+    dinghy.create_ssh_key test_pub_key, key_name, (e, o) ->
+      temp_ssh_ids.push(o.ssh_key.id)
+      if o.status is 'OK'
+        key = o.ssh_key
+        id = key.id
+        name = key.name
+        key_str = key.ssh_pub_key
+        ok = "OK".green
+        console.log "{ status: '#{ok}', ssh_key: { id: #{id}, name: '#{name}', ssh_pub_key: '#{key_str}' } }"
+      else
+        console.log "ERROR".red
+        console.log o.status
 
 
 parser.command('keys')
