@@ -5,9 +5,7 @@ dinghy = require './index'
 fs = require 'fs'
 colors  = require 'colors'
 colors.mode = 'console'
-# Chance = require 'chance'
 parser = require "nomnom"
-# chance = new Chance()
 
 dinghy.setup secret.client_id, secret.api_key
 
