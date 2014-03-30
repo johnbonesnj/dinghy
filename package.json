@@ -4,7 +4,8 @@
   "description": "Wrapper for Digital Ocean API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -t 40000 test/test.js",
+    "start": "index.js"
   },
   "repository": {
     "type": "git",
@@ -16,11 +17,23 @@
     "url": "https://github.com/johnbonesnj/dinghy/issues"
   },
   "homepage": "https://github.com/johnbonesnj/dinghy",
-  "devDependencies": {
-    "gulp-jasmine": "~0.2.0",
-    "gulp-coffee": "~1.4.1",
-    "gulp": "~3.5.6",
+  "dependencies": {
     "unirest": "~0.1.9",
-    "colors": "~0.6.2"
+    "colors": "~0.6.2",
+    "async": "~0.2.5",
+    "request": "^2.34.0"
+  },
+  "devDependencies": {
+    "coffee-script": "*",
+    "gulp-rename": "*",
+    "gulp-uglify": "*",
+    "gulp-jshint": "*",
+    "gulp": "*",
+    "gulp-util": "*",
+    "gulp-mocha": "*",
+    "gulp-coffee": "*",
+    "mocha": "*",
+    "should": "*",
+    "gulp-clean": "^0.2.4"
   }
 }
