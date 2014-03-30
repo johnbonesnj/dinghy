@@ -1,8 +1,5 @@
 request = require 'request'
-colors  = require 'colors'
-colors.mode = 'console'
 
-secret = require './secret'
 
 dinghy = {}
 module.exports = dinghy
