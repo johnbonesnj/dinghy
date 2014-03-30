@@ -30,18 +30,18 @@ dinghy.documentation = (callback) ->
 
 # SSH Keys
 dinghy.all_ssh_keys = (callback) ->
-  # GET https://api.digitalocean.com/ssh_keys/?client_id=[client_id]&api_key=[api_key]
+  #/ssh_keys/?cred_str
   req = host_str + '/ssh_keys/?' + cred_str
   client.send_request(req, callback)
 
 dinghy.show_ssh_key = (id, callback) ->
-  # GET https://api.digitalocean.com/ssh_keys/[ssh_key_id]/?client_id=[client_id]&api_key=[api_key]
+  #/ssh_keys/[ssh_key_id]/?cred_str
   req = host_str + '/ssh_keys/' + "#{id}/?" + cred_str
   client.send_request(req, callback)
 
 dinghy.create_ssh_key = (key, name, callback) ->
-  # GET https://api.digitalocean.com/ssh_keys/new/?name=[ssh_key_name]&ssh_pub_key=[ssh_public_key]&client_id=[client_id]&api_key=[api_key]
-  req = host_str + '/ssh_keys/new/?name=' + name + '&ssh_pub_key=' + key + '&' + cred_str
+  #/ssh_keys/new/?name=[ssh_key_name]&ssh_pub_key=[ssh_public_key]&cred_str
+  req = host_str+'/ssh_keys/new/?name='+name+'&ssh_pub_key='+key+'&'+cred_str
   client.send_request req, (e, o) ->
     # adds to a local array of ssh_ids
     if Array.isArray(o)
@@ -56,7 +56,7 @@ dinghy.create_ssh_key = (key, name, callback) ->
     callback e, o
 
 dinghy.destroy_ssh_key = (id, callback) ->
-  # GET https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/?client_id=[client_id]&api_key=[api_key]
+  #/ssh_keys/[ssh_key_id]/destroy/?cred_str
   req = host_str + "/ssh_keys/#{id}/destroy/?" + cred_str
   client.send_request(req, callback)
 
@@ -79,4 +79,3 @@ dinghy.get_ids = (callback) ->
 dinghy.sizes = (callback) ->
   req = host_str + "/sizes/?" + cred_str
   client.send_request(req, callback)
-
