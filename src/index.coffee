@@ -66,7 +66,7 @@ dinghy.all_droplets = (callback) ->
   client.send_request req, callback
 
 dinghy.get_ids = (callback) ->
-  req = host_str + "/droplets/?" + cred_str
+  req = "#{host_str}/droplets/?#{cred_str}"
   client.send_request req, (e, o) ->
     if e
       callback e

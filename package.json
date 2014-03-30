@@ -4,7 +4,7 @@
   "description": "Wrapper for Digital Ocean API",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -R spec test/test.js",
+    "test": "mocha -R spec --compilers coffee:coffee-script/register test/test.coffee",
     "start": "index.js"
   },
   "repository": {
@@ -22,7 +22,8 @@
     "colors": "~0.6.2",
     "async": "~0.2.5",
     "request": "^2.34.0",
-    "chai": "^1.9.1"
+    "nomnom": "1.6.2",
+    "underscore": "^1.6.0"
   },
   "devDependencies": {
     "coffee-script": "*",
@@ -34,7 +35,7 @@
     "gulp-mocha": "*",
     "gulp-coffee": "*",
     "mocha": "*",
-    "should": "*",
+    "chai": "^1.9.1",
     "gulp-clean": "^0.2.4"
   }
 }
