@@ -39,6 +39,17 @@ gulp.task('deploy', function () {
 
 });
 
+gulp.task('test', function () {
+    gulp.src('test/test.js')
+      .pipe(mocha({
+        reporter: 'spec',
+        globals: {
+          should: require('should')
+        }
+      }))
+      .on('error', gutil.log);
+});
+
 gulp.task('coffee', ['coffee-main', 'coffee-lib', 'coffee-test']);
 
-gulp.task('default', ['clean', 'coffee'])
+gulp.task('default', ['clean', 'coffee', 'test'])

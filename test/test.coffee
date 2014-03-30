@@ -1,6 +1,8 @@
-should = require 'should'
-secret = require '../build/secret'
-dinghy = require '../build/index'
+chai = require 'chai'
+chai.should()
+#should = require 'should'
+secret = require '../src/secret'
+dinghy = require '../src/index'
 fs = require 'fs'
 
 
@@ -45,7 +47,7 @@ describe 'documentation', ->
   it 'should be able to list sizes', (done) ->
     dinghy.sizes (e, o) ->
       o.status.should.equal 'OK'
-      console.log o
+      #console.log o
       done()
 
 describe 'create functions', ->
@@ -53,7 +55,7 @@ describe 'create functions', ->
     it 'should create a key when given name and public key', (done) ->
       dinghy.create_ssh_key test_pub_key, 'test_name', (e, o) ->
         o.status.should.equal 'OK'
-        console.log o
+        #console.log o
         temp_ssh_ids.push(o.ssh_key.id)
         done()
 
@@ -62,15 +64,36 @@ describe 'list functions', ->
     it 'should list all ssh keys', (done) ->
       dinghy.all_ssh_keys (e, o) ->
         o.status.should.equal 'OK'
-        console.log o
+        #console.log o
         done()
 
     it 'should list single ssh key when given id', (done) ->
-      dinghy.show_ssh_key '45398', (e, o) ->
+      dinghy.show_ssh_key temp_ssh_ids[0], (e, o) ->
         o.status.should.equal 'OK'
-        console.log o
+        #console.log o
         done()
-
+  describe 'events', ->
+    it 'should return No Event Found when given wrong id', (done) ->
+      dinghy.events '12234', (e, o) ->
+        o.should.equal 'No Event Found'
+        done()
+  describe 'droplets', ->
+    it 'should return array of droplet ids', (done) ->
+      dinghy.get_ids (e, o) ->
+        #console.log o
+        o.should.be.Array?
+        done()
+    it 'should return droplets object', (done) ->
+      dinghy.all_droplets (e, o) ->
+        o.status.should.equal 'OK'
+        #console.log o
+        done()
+    it 'should return droplet when given id', (done) ->
+      id = '1364556'
+      dinghy.show_droplet id, (e, o) ->
+        #console.log o
+        o.status.should.equal 'OK'
+        done()
 
 describe 'destroy functions', ->
   describe 'ssh keys', ->
@@ -78,5 +101,5 @@ describe 'destroy functions', ->
       dinghy.destroy_ssh_key temp_ssh_ids[0], (e, o) ->
       # dinghy.destroy_ssh_key '102716', (e, o) ->
         o.status.should.equal 'OK'
-        console.log "destroy_ssh_key Results: #{o.status}"
+        #console.log "destroy_ssh_key Results: #{o.status}"
         done()
