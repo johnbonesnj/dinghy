@@ -6,7 +6,6 @@ dinghy = require '../src/index'
 fs = require 'fs'
 
 
-
 before (done) ->
   dinghy.setup secret.client_id, secret.api_key
   done()
@@ -14,20 +13,21 @@ before (done) ->
 test_pub_key = fs.readFileSync './test/test_key.pub', 'utf8'
 
 temp_ids = ""
-new_droplet_multi = droplets: [
-  {
-    name: "test2"
-    size_id: 66
-    image_id: 25306
-    region_id: 1
-  }
-  {
-    name: "test3"
-    size_id: 66
-    image_id: 25306
-    region_id: 1
-  }
-]
+new_droplet_multi =
+  droplets: [
+    {
+      name: "test2"
+      size_id: 66
+      image_id: 25306
+      region_id: 1
+    }
+    {
+      name: "test3"
+      size_id: 66
+      image_id: 25306
+      region_id: 1
+    }
+  ]
 new_droplet =
   name: "test1"
   size_id: 66
